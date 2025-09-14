@@ -21,5 +21,10 @@ metadata.txt for metadata and a name file for getting the package name (so you c
 a zeropkg package must be compressed in a tar.gz format and contain a build script (for installing ik the name is misleading) a remove script
 for removing your package and a metadata.txt script for a name description or whatever you want to add it is just a .txt file and a name file
 which contains the name of your package (because im too lazy to figure out how to get it out of metadata.txt)
-
-
+## installing zeropkg
+installing zeropkg is actually quite simple!
+- clone the repository: `git clone https://github.com/v1nch3ns0/zeropkg`
+- make the script executable: `chmod +x zeropkg`
+- copy the example or generate a config: `sudo touch /etc/zeropkg && zeropkg -g` or `cp zeropkg.cfg /etc/zeropkg.cfg`
+- move the script to somewhere in PATH eg /usr/bin: `sudo mv zeropkg /usr/bin/`
+and thats it! pretty short ig haha
