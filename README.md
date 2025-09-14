@@ -14,9 +14,9 @@ its under 130 lines of code and still is (kind of) useable
 boredom and experience, i wanted to get better at shell scripting and i thought a package manager
 would be a pretty cool thing, its semi inspired by the kiss package manager because i enjoy using it
 ## usage
-'''zeropkg -i example.tar.gz''' this would run a build script (more of an install script) copy a remove script used to remove the package, 
+```zeropkg -i example.tar.gz``` this would run a build script (more of an install script) copy a remove script used to remove the package, 
 metadata.txt for metadata and a name file for getting the package name (so you can remove it etc)
-'''zeropkg -r example''' this would run the previously copied remove script and remove the package
+```zeropkg -r example``` this would run the previously copied remove script and remove the package
 ## how can i port packages? (if you really want to)
 a zeropkg package must be compressed in a tar.gz format and contain a build script (for installing ik the name is misleading) a remove script
 for removing your package and a metadata.txt script for a name description or whatever you want to add it is just a .txt file and a name file
