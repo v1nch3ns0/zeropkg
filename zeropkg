@@ -27,7 +27,7 @@ exit 1
 fi
 }
 usage(){
-echo -e "Usage: ${BLUE}${0}${RESET} ${YELLOW}[-i package_archive] [-r package] [-d url] [-l] [-h] [-v] [-m package] [-p package] [-g]${RESET}"
+echo -e "Usage: ${BLUE}zeropkg{RESET} ${YELLOW}[-i package_archive] [-r package] [-d url] [-l] [-h] [-v] [-m package] [-p package] [-g]${RESET}"
 echo -e "  ${YELLOW}-i${RESET} Install a package. (from an archive)"
 echo -e "  ${YELLOW}-r${RESET} Remove a package."
 echo -e "  ${YELLOW}-l${RESET} List installed packages."
@@ -51,7 +51,7 @@ check_arg
 filename=$(basename "$arg")
 echo -e "${YELLOW}Downloading ${arg} with curl...${RESET}"
 mkdir -p "$DOWNLOAD_DIR/$filename"
-curl -Lo "${DOWNLOAD_DIR}${filename}" "$arg"
+curl -Lo "${DOWNLOAD_DIR}/${filename}" "$arg"
 if [ "$?" -eq 0 ]; then
 echo -e "${GREEN}Downloaded to /$DOWNLOAD_DIR/$filename (default location)...${RESET}"
 echo -e "${YELLOW}Run '$0 -i <archive>' to install!"
