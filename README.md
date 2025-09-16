@@ -1,6 +1,6 @@
 # zeropkg
-A super minimal shell script (POSIX) based package manager written in under 2 days, 
-its under 130 lines of code and still is (kind of) useable
+A super minimal shell scriptpackage manager written in under 2 days, 
+its under 200 lines of code and is (kind of) useable
 ## features
 - Installing a package from a gzip archive
 - Using curl to get an archive (or any file) from a url
