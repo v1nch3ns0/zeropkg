@@ -30,5 +30,5 @@ installing zeropkg is actually quite simple!
 - move the script to somewhere in PATH eg /usr/bin: `sudo mv zeropkg /usr/bin/`
 # dependencies
 all it needs is gnu tar (not busybox tar) sh and curl (for downloading)
-
+----------------------------------------
 expect bugs its very buggy...
