@@ -63,31 +63,31 @@ install_package(){ # install from archive
 check_arg
 echo -e "${yellow}Installing ${arg} (Make sure you are in the same directory as the archive...)${reset}"
 filename=$(basename "$arg" .tar.gz)
-tar -xzf "${arg}"
+tar -xzf "${arg}" -C "${DOWNLOAD_DIR}"
 if [ $? -ne 0 ]; then
 echo -e "${red}TAR failed: exit status: $?, Read the output for more information...${reset}"
 exit 1
 fi
-check_file_exists "$filename/name"
-pkg_name=$(cat "${filename}/name")
+check_file_exists "${DOWNLOAD_DIR}/$filename/name"
+pkg_name=$(cat "${DOWNLOAD_DIR}/${filename}/name")
 echo $pkg_name >> $INSTALL_LOG
-if [ -f "${filename}/build" ]; then
-./"$filename/build"
+if [ -f "${DOWNLOAD_DIR}/${filename}/build" ]; then
+sh "${DOWNLOAD_DIR}/$filename/build"
 if [ $? -ne 0 ]; then
 echo -e "${red}Build script failed, exiting..${reset}"
 exit 1
 fi
 fi
-if [ -f "${filename}/remove" ]; then
+if [ -f "${DOWNLOAD_DIR}/${filename}/remove" ]; then
 mkdir -p "${REMOVE_SCRIPTS}/$pkg_name"
-mv -f "${filename}/remove" "${REMOVE_SCRIPTS}/${pkg_name}/"
+mv -f "${DOWNLOAD_DIR}/${filename}/remove" "${REMOVE_SCRIPTS}/${pkg_name}/"
 else
 echo -e "${red}Remove script does not exist, exiting...${reset}"
 exit 1
 fi
-if [ -f "${filename}/metadata.txt" ]; then
+if [ -f "${DOWNLOAD_DIR}/${filename}/metadata.txt" ]; then
 mkdir -p "$METADATA_FILES/$pkg_name/"
-mv "${filename}/metadata.txt" "$METADATA_FILES/$pkg_name/"
+mv "${DOWNLOAD_DIR}/${filename}/metadata.txt" "$METADATA_FILES/$pkg_name/"
 else
 echo -e "${red}Package metadata file not found, ignoring...${reset}"
 fi
@@ -136,3 +136,4 @@ case "$command" in
 -g) generate_config ;;
 *) usage ;;
 esac
+
