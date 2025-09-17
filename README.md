@@ -1,4 +1,4 @@
-!("assets/screenshot.png")
+<img src="assets/screenshot.png">
 # zeropkg
 A super minimal shell script package manager written in under 2 days, 
 its under 200 lines of code and is (kind of) useable
