@@ -1,18 +1,18 @@
 #!/bin/sh
 set -e
 # nice ansi escape codes
-RED="\033[31m"
-GREEN="\033[32m"
-YELLOW="\033[33m"
-BLUE="\033[34m"
-BOLD="\033[1m"
-RESET="\033[0m"
+red="\033[31m"
+green="\033[32m"
+yellow="\033[33m"
+blue="\033[34m"
+bold="\033[1m"
+reset="\033[0m"
 # arguments
 config="/etc/zeropkg.cfg"
 source "$config"
 command="${1}"
 arg="${2}"
-version="${BLUE}zeropkg 001${RESET}"
+version="${blue}zeropkg 001${reset}"
 # start of the actual package manager 
 check_arg(){
 if [ -z "$arg" ]; then
@@ -22,50 +22,50 @@ fi
 }
 check_file_exists() {
 if [ ! -f "$1" ]; then
-echo -e "${RED}File not found: $1${RESET}"
+echo -e "${red}File not found: $1${reset}"
 exit 1
 fi
 }
 usage(){
-echo -e "Usage: ${BLUE}zeropkg{RESET} ${YELLOW}[-i package_archive] [-r package] [-d url] [-l] [-h] [-v] [-m package] [-p package] [-g]${RESET}"
-echo -e "  ${YELLOW}-i${RESET} Install a package. (from an archive)"
-echo -e "  ${YELLOW}-r${RESET} Remove a package."
-echo -e "  ${YELLOW}-l${RESET} List installed packages."
-echo -e "  ${YELLOW}-h${RESET} Display this help message."
-echo -e "  ${YELLOW}-d${RESET} Download a package. (needs url)"
-echo -e "  ${YELLOW}-v${RESET} Package manager version."
-echo -e "  ${YELLOW}-m${RESET} Display package metadata."
-echo -e "  ${YELLOW}-p${RESET} Purge a package. (deletes all configuration and scripts related)"
-echo -e "  ${YELLOW}-g${RESET} Generate a default config file. (/etc/zeropkg.cfg)"
+echo -e "Usage: ${blue}${0}${reset} ${yellow}[-i package_archive] [-r package] [-d url] [-l] [-h] [-v] [-m package] [-p package] [-g]${reset}"
+echo -e "  ${yellow}-i${reset} Install a package. (from an archive)"
+echo -e "  ${yellow}-r${reset} Remove a package."
+echo -e "  ${yellow}-l${reset} List installed packages."
+echo -e "  ${yellow}-h${reset} Display this help message."
+echo -e "  ${yellow}-d${reset} Download a package. (needs url)"
+echo -e "  ${yellow}-v${reset} Package manager version."
+echo -e "  ${yellow}-m${reset} Display package metadata."
+echo -e "  ${yellow}-p${reset} Purge a package. (deletes all configuration and scripts related)"
+echo -e "  ${yellow}-g${reset} Generate a default config file. (/etc/zeropkg.cfg)"
 }
 if [ -z "$command" ]; then
 usage
 exit 1
 fi
 if [ "$UID" -ne "0" ]; then
-echo "${RED}Run as root!${RESET}"
+echo "${red}Run as root!${reset}"
 exit 1
 fi
 download_package(){ # download with curl
 check_arg
 filename=$(basename "$arg")
-echo -e "${YELLOW}Downloading ${arg} with curl...${RESET}"
+echo -e "${yellow}Downloading ${arg} with curl...${reset}"
 mkdir -p "$DOWNLOAD_DIR/$filename"
-curl -Lo "${DOWNLOAD_DIR}/${filename}" "$arg"
+curl -Lo "${DOWNLOAD_DIR}${filename}" "$arg"
 if [ "$?" -eq 0 ]; then
-echo -e "${GREEN}Downloaded to /$DOWNLOAD_DIR/$filename (default location)...${RESET}"
-echo -e "${YELLOW}Run '$0 -i <archive>' to install!"
+echo -e "${green}Downloaded to /$DOWNLOAD_DIR/$filename (default location)...${reset}"
+echo -e "${yellow}Run '$0 -i <archive>' to install!${reset}"
 else
-echo -e "${RED}Download failed: exit status: $?, Read the output for more information...${RESET}"
+echo -e "${red}Download failed: exit status: $?, Read the output for more information...${reset}"
 fi
 }
 install_package(){ # install from archive
 check_arg
-echo -e "${YELLOW}Installing ${arg} (Make sure you are in the same directory as the archive...)${RESET}"
+echo -e "${yellow}Installing ${arg} (Make sure you are in the same directory as the archive...)${reset}"
 filename=$(basename "$arg" .tar.gz)
 tar -xzf "${arg}"
 if [ $? -ne 0 ]; then
-echo -e "${RED}TAR failed: exit status: $?, Read the output for more information...${RESET}"
+echo -e "${red}TAR failed: exit status: $?, Read the output for more information...${reset}"
 exit 1
 fi
 check_file_exists "$filename/name"
@@ -74,7 +74,7 @@ echo $pkg_name >> $INSTALL_LOG
 if [ -f "${filename}/build" ]; then
 ./"$filename/build"
 if [ $? -ne 0 ]; then
-echo -e "${RED}Build script failed, exiting..${RESET}"
+echo -e "${red}Build script failed, exiting..${reset}"
 exit 1
 fi
 fi
@@ -82,16 +82,16 @@ if [ -f "${filename}/remove" ]; then
 mkdir -p "${REMOVE_SCRIPTS}/$pkg_name"
 mv -f "${filename}/remove" "${REMOVE_SCRIPTS}/${pkg_name}/"
 else
-echo -e "${RED}Remove script does not exist, exiting...${RESET}"
+echo -e "${red}Remove script does not exist, exiting...${reset}"
 exit 1
 fi
 if [ -f "${filename}/metadata.txt" ]; then
 mkdir -p "$METADATA_FILES/$pkg_name/"
 mv "${filename}/metadata.txt" "$METADATA_FILES/$pkg_name/"
 else
-echo -e "${RED}Package metadata file not found, ignoring..."
+echo -e "${red}Package metadata file not found, ignoring...${reset}"
 fi
-echo -e "${YELLOW}Package successfully installed!${RESET}"
+echo -e "${yellow}Package successfully installed!${reset}"
 }
 remove_package(){ # remove package
 check_arg
@@ -108,13 +108,13 @@ check_file_exists "$METADATA_FILES/$arg/metadata.txt"
 cat "$METADATA_FILES/$arg/metadata.txt"
 }
 purge_package(){ # purge package (remove but deletes everything related)
-echo -e "${YELLOW}Purging $DOWNLOAD_DIR files related to $arg${RESET}"
+echo -e "${yellow}Purging $DOWNLOAD_DIR files related to $arg${reset}"
 rm -rf "$DOWNLOAD_DIR/$arg"
 rm -rf "$DOWNLOAD_DIR/$arg.tar.gz"
-echo -e "${YELLOW}Purging $METADATA_FILES files related to $arg${RESET}"
+echo -e "${yellow}Purging $METADATA_FILES files related to $arg${reset}"
 check_file_exists "$METADATA_FILES/$arg/metadata.txt"
 rm -rf "$METADATA_FILES/$arg"
-echo -e "${YELLOW}Purging $REMOVE_SCRIPTS files related to $arg${RESET}"
+echo -e "${yellow}Purging $REMOVE_SCRIPTS files related to $arg${reset}"
 check_file_exists "$REMOVE_SCRIPTS/$arg/remove"
 sh "$REMOVE_SCRIPTS/$arg/remove"
 rm -rf "$REMOVE_SCRIPTS/$arg"
@@ -122,7 +122,7 @@ sed -i "/$arg/d" $INSTALL_LOG
 }
 generate_config(){
 echo -e "# DEFAULT CONFIGURATION\nDOWNLOAD_DIR=/tmp/zeropkg\nINSTALL_LOG=/etc/pkg-install.log\nREMOVE_SCRIPTS=/var/zeropkg/remove_scripts\nMETADATA_FILES=/var/zeropkg/metadata" > "/etc/zeropkg.cfg"
-echo -e "${YELLOW}Generated config...${RESET}"
+echo -e "${yellow}Generated config...${reset}"
 }
 case "$command" in
 -d) download_package ;;
