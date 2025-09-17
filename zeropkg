@@ -49,11 +49,12 @@ fi
 download_package(){ # download with curl
 check_arg
 filename=$(basename "$arg")
+name="${filename%%.*}" # i admit this is reddit
 echo -e "${yellow}Downloading ${arg} with curl...${reset}"
-mkdir -p "$DOWNLOAD_DIR/$filename"
-curl -Lo "${DOWNLOAD_DIR}${filename}" "$arg"
+mkdir -p "${DOWNLOAD_DIR}/${name}"
+curl -Lo "${DOWNLOAD_DIR}/${name}/${filename}" "$arg"
 if [ "$?" -eq 0 ]; then
-echo -e "${green}Downloaded to /$DOWNLOAD_DIR/$filename (default location)...${reset}"
+echo -e "${green}Downloaded to /$DOWNLOAD_DIR/$name/ (config location)...${reset}"
 echo -e "${yellow}Run '$0 -i <archive>' to install!${reset}"
 else
 echo -e "${red}Download failed: exit status: $?, Read the output for more information...${reset}"
