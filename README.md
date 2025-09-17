@@ -27,4 +27,4 @@ installing zeropkg is actually quite simple!
 - make the script executable: `chmod +x zeropkg`
 - copy the example or generate a config: `sudo touch /etc/zeropkg && zeropkg -g` or `cp zeropkg.cfg /etc/zeropkg.cfg`
 - move the script to somewhere in PATH eg /usr/bin: `sudo mv zeropkg /usr/bin/`
-and thats it! pretty short ig haha
+expect bugs its very buggy...
