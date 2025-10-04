@@ -26,7 +26,7 @@ which contains the name of your package (because im too lazy to figure out how t
 installing zeropkg is actually quite simple!
 - clone the repository: `git clone https://github.com/v1nch3ns0/zeropkg`
 - make the script executable: `chmod +x zeropkg`
-- copy the example or generate a config: `sudo touch /etc/zeropkg && zeropkg -g` or `cp zeropkg.cfg /etc/zeropkg.cfg`
+- copy the example or generate a config: `sudo touch /etc/zeropkg.cfg && zeropkg -g` or `cp zeropkg.cfg /etc/zeropkg.cfg`
 - move the script to somewhere in PATH eg /usr/bin: `sudo mv zeropkg /usr/bin/`
 ## dependencies
 all it needs is gnu tar (not busybox tar) sh and curl (for downloading)
